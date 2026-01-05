@@ -38,3 +38,7 @@ VALIDATE $? "starting mysqld"
 
 mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
 VALIDATE $? "Setting up root password"
+
+#On first run, the root password will be setup but, when we run the script again there will be failure because the root password is already setup.
+#by default shell script is not idempotent, we can make it idempotent
+
