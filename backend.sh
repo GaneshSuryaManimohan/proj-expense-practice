@@ -41,7 +41,7 @@ then
     dnf install nodejs -y &>>$LOGFILE
     VALIDATE $? "Installing nodejs"
 else
-    echo "nodejs is already installed....$Y SKIPPING $N"
+    echo -e "nodejs is already installed....$Y SKIPPING $N"
 fi
 
 id expense &>>$LOGFILE
