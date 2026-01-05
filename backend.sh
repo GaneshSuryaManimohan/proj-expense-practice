@@ -38,7 +38,7 @@ VALIDATE $? "Enabling nodejs:20"
 dnf list installed nodejs &>>$LOGFILE
 if [ $? -ne 0 ]
 then
-    dnf install nodejs &>>$LOGFILE
+    dnf install nodejs -y &>>$LOGFILE
     VALIDATE $? "Installing nodejs"
 else
     echo "nodejs is already installed....$Y SKIPPING $N"
