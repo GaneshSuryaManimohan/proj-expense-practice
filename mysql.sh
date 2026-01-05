@@ -8,6 +8,8 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
+echo "Please enter root password for MySQL::"
+read -s mysql_root_password
 
 VALIDATE(){
     if [ $1 -ne 0 ]
@@ -42,10 +44,10 @@ VALIDATE $? "starting mysqld"
 #On first run, the root password will be setup but, when we run the script again there will be failure because the root password is already setup.
 #by default shell script is not idempotent, we can make it idempotent
 
-mysql -h db.surya-devops.site -uroot -pExpenseApp@1 -e 'show databases;' &>>$LOGFILE
+mysql -h db.surya-devops.site -uroot -p${mysql_root_password} -e 'show databases;' &>>$LOGFILE
 if [ $? -ne 0 ]
 then
-    mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+    mysql_secure_installation --set-root-pass ${mysql_root_password} &>>$LOGFILE
     VALIDATE $? "Setting up password for root"
 else
     echo -e "Root password is already set....$Y SKIPPING $N"
