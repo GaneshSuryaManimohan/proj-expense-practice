@@ -36,9 +36,17 @@ VALIDATE $? "enabling mysqld"
 systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "starting mysqld"
 
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
-VALIDATE $? "Setting up root password"
+# mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+# VALIDATE $? "Setting up root password"
 
 #On first run, the root password will be setup but, when we run the script again there will be failure because the root password is already setup.
 #by default shell script is not idempotent, we can make it idempotent
 
+mysql -h db.surya-devops.site -uroot -pExpenseApp@1 -e 'show databases;' &>>$LOGFILE
+if [ $? -ne 0 ]
+then
+    mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$LOGFILE
+    VALIDATE $? "Setting up password for root"
+else
+    echo -e "Root password is already set....$Y SKIPPING $N"
+fi
