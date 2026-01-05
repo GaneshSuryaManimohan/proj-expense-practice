@@ -85,7 +85,7 @@ then
     dnf install mysql -y &>>$LOGFILE
     VALIDATE $? "Installing mysql"
 else
-    echo "mysql is already installed....$Y SKIPPING $N"
+    echo -e "mysql is already installed....$Y SKIPPING $N"
 fi
 
 mysql -h db.surya-devops.site -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
